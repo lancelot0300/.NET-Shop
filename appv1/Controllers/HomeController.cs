@@ -1,24 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using appv1.Interfaces;
-using appv1.DAL.Models;
-using appv1.DAL.Contexts;
 using System.Linq;
+using System.Threading.Tasks;
+using appv1.DAL.Contexts;
+using appv1.DAL.Models;
+using appv1.Interfaces;
 
 namespace appv1.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IObslugaBazyDanych obslugaBazyDanych;
+
         private readonly DziekanatContext bazaDanychDziekanatu;
 
         public HomeController(IObslugaBazyDanych obslugaBazyDanych, DziekanatContext bazaDanychDziekanatu)
         {
             this.obslugaBazyDanych = obslugaBazyDanych;
             this.bazaDanychDziekanatu = bazaDanychDziekanatu;
-        }
 
+            obslugaBazyDanych.Context = bazaDanychDziekanatu;
+        }
         public IActionResult Index()
         {
             return View();
@@ -29,34 +32,78 @@ namespace appv1.Controllers
             return View();
         }
 
-
+        [HttpGet]
+        public IActionResult DodajZajecia()
+        {
+            return View();
+        }
 
         [HttpPost]
-        [Route("{controller}/Dodaj/{nazwa}")]
-        public IActionResult DodajDoPlanu(string nazwa = null)
+        public IActionResult DodajZajecia(Zajecia zajecia)
         {
-            if (nazwa == null) return BadRequest(new { komunikat = "Brak danych wejściowych" });
-
-            string komunikat = obslugaBazyDanych.DodajZajeciaDoPlanu(nazwa);
-
-            return Ok(new { komunikat = komunikat });
+            try
+            {
+                obslugaBazyDanych.DodajZajecia(zajecia);
+                return View("DodanoZajecia", zajecia);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpGet]
-        [Route("{controller}/PlanZajec")]
-        public IActionResult PlanZajec()
-        {
-            List<Zajecia> planZajec = bazaDanychDziekanatu.Zajecia.ToList();
-
-            return View(planZajec);
-        }
         [HttpGet]
         [Route("{controller}/Students")]
         public IActionResult Students()
         {
-            List<Student> Students = bazaDanychDziekanatu.Students.ToList();
+            List<Student> students = bazaDanychDziekanatu.Students.ToList();
+            return View(students);
+        }
+        [HttpGet]
+        [Route("{controller}/PlanZajec")]
+        public IActionResult PlanZajec()
+        {
+            return View(obslugaBazyDanych.GetCourses());
+        }
+        [HttpDelete]
+        [Route("{controller}/UsunZajecia/{id}")]
+        public IActionResult UsunZajecia(int id)
+        {
+            obslugaBazyDanych.UsunZajecia(id);
 
-            return View(Students);
+            return View("Zajecia", obslugaBazyDanych.GetCourses());
+        }
+
+
+        [HttpGet]
+        [Route("{controller}/AddStudent")]
+        public IActionResult AddStudent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("{controller}/AddStudent")]
+        public IActionResult AddStudent(Student student)
+        {
+
+            obslugaBazyDanych.DodajStudenta(student);
+
+            return View("DodanoStudenta");
+        }
+
+        [HttpGet]
+        [Route("{controller}/DodanoStudenta2")]
+        public IActionResult DodanoStudenta2()
+        {
+            return View();
+        }
+
+        [Route("{controller}/v1/Echo/{message}")]
+        [HttpGet]
+        public IActionResult Echo(string message = null)
+        {
+            return Ok(message);
         }
 
     }

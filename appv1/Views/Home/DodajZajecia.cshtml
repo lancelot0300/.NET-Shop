@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model appv1.DAL.Models.Zajecia
+
+@{
+    
+}
+
+<form asp-action="DodajZajecia">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="ID" />
+    <div class="form-group">
+        <label asp-for="NazwaZajec" class="control-label"></label>
+        <input asp-for="NazwaZajec" class="form-control" />
+        <span asp-validation-for="NazwaZajec" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TerminZajec" class="control-label"></label>
+        <input asp-for="TerminZajec" class="form-control" />
+        <span asp-validation-for="TerminZajec" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+</form>

@@ -5,25 +5,25 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace appv1.DAL.Contexts
-{ 
+{
     public static class DziekanatDatabaseInitializer
     {
-        public static void Initialize(DziekanatContext context)
+        public static void Initialize(DziekanatContext Context)
         {
-            context.Database.EnsureCreated();
+            Context.Database.EnsureCreated();
 
-            InitializeStudents(context);
-            InitializeCourses(context);
+            InitializeStudents(Context);
+            InitializeCourses(Context);
         }
 
-        private static void InitializeStudents(DziekanatContext context)
+        private static void InitializeStudents(DziekanatContext Context)
         {
-            if (context.Students.Any())
+            if (Context.Students.Any())
             {
                 return;
             }
             var studenci = new Student[]
-            { 
+            {
                 new Student { NumerIndeksu = "111", Imie = "Adam", Nazwisko = "Nowak" },
                 new Student { NumerIndeksu = "222", Imie = "Andrzej", Nazwisko = "Duda" },
                 new Student { NumerIndeksu = "333", Imie = "Anna", Nazwisko = "Rożek" },
@@ -35,14 +35,14 @@ namespace appv1.DAL.Contexts
 
             foreach (Student s in studenci)
             {
-                context.Students.Add(s);
+                Context.Students.Add(s);
             }
-            context.SaveChanges();
+           Context.SaveChanges();
         }
 
-        private static void InitializeCourses(DziekanatContext context)
+        private static void InitializeCourses(DziekanatContext Context)
         {
-            if (context.Zajecia.Any())
+            if (Context.Zajecia.Any())
             {
                 return;
             }
@@ -60,9 +60,9 @@ namespace appv1.DAL.Contexts
             };
             foreach (Zajecia c in zajecia)
             {
-                context.Zajecia.Add(c);
+                Context.Zajecia.Add(c);
             }
-            context.SaveChanges();
+            Context.SaveChanges();
         }
     }
 

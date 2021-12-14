@@ -76,25 +76,30 @@ namespace appv1.Controllers
 
 
         [HttpGet]
-        [Route("{controller}/AddStudent")]
-        public IActionResult AddStudent()
+        [Route("{controller}/DodajStudenta")]
+        public IActionResult DodajStudenta()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("{controller}/AddStudent")]
-        public IActionResult AddStudent(Student student)
+        [Route("{controller}/DodajStudenta")]
+        public IActionResult DodajStudenta(Student student)
         {
-
-            obslugaBazyDanych.DodajStudenta(student);
-
-            return View("DodanoStudenta");
+            try
+            {
+                obslugaBazyDanych.DodajStudenta(student);
+                return View("DodanoStudenta", student);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
-        [Route("{controller}/DodanoStudenta2")]
-        public IActionResult DodanoStudenta2()
+        [Route("{controller}/DodanoStudenta")]
+        public IActionResult DodanoStudenta()
         {
             return View();
         }

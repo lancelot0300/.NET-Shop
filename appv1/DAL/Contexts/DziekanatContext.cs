@@ -10,6 +10,8 @@ namespace appv1.DAL.Contexts
 
         }
 
-        public DbSet<Zajecia> Zajecia { get; set; }
+    public DbSet<Zajecia> Zajecia { get; set; }
+    
+    public DbSet<Student> Students { get; set; }
     }
 }

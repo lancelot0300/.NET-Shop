@@ -24,7 +24,7 @@ body {
 .tabela td{
     min-width:25px;
 }
-    .tabela tr, td {
+    .tabela td {
         border: solid 1px black;
         padding:10px;
     }

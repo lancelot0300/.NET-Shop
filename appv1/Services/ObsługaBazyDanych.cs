@@ -23,11 +23,6 @@ namespace appv1.Services
             Context.SaveChanges();
         }
 
-        public List<Products> GetProduct()
-        {
-            List<Products> products= Context.Products.ToList();
-            return products;
-        }
 
         public void UsunProduct(int id)
         {

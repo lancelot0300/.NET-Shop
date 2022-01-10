@@ -14,5 +14,6 @@ namespace appv1.Interfaces
 
 
         public List<Products> GetProducts();
+        void UsunProduct(int id);
     }
 }

@@ -53,13 +53,22 @@ namespace appv1.Controllers
             return View();
         }
 
-       
+
 
         [Route("{controller}/v1/Echo/{message}")]
         [HttpGet]
         public IActionResult Echo(string message = null)
         {
             return Ok(message);
+        }
+
+        [HttpPost]
+        [Route("{controller}/UsunProduct/{id}")]
+        public IActionResult UsunProduct(int id)
+        {
+            obslugaBazyDanych.UsunProduct(id);
+
+            return View("Products", obslugaBazyDanych.GetProducts());
         }
 
     }

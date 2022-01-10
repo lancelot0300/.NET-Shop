@@ -16,3 +16,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+.tabela {
+    table-layout: fixed;
+    text-align:center;
+   
+}
+.tabela td{
+    min-width:25px;
+}
+    .tabela tr, td {
+        border: solid 1px black;
+        padding:10px;
+    }

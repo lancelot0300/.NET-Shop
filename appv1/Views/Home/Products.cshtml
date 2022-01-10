@@ -6,20 +6,27 @@
 
 <div>
     <h1>Produkty</h1>
-    <table>
-        <thead>
-            <tr> ID </tr>
-            <tr> Nazwa </tr>
-            <tr> Kod Produktu </tr>
-        </thead>
-        <tbody>
+    <table class="tabela">
+       
+            <tr> 
+                
+                
+              <td>ID</td>
+              <td>Nazwa</td>
+              <td>Kod Produktu</td>
+              <td>Usuń Produkt</td>
+                
+            </tr>
+              
+        
+        
             @foreach (var item in Model)
             {
                 <tr>
                     <td> @item.ID </td>
                     <td> @item.Nazwa </td>
                     <td> @item.KodProduktu </td>
-                    <td>@using( @Html.BeginForm("UsunProduct", "Home" , new {id = item.ID}))
+                    <td >@using( @Html.BeginForm("UsunProduct", "Home" , new {id = item.ID}))
                         {
                             <input type="submit"  value="Usun" />
                         }
@@ -27,6 +34,6 @@
 
                 </tr>
             }
-        </tbody>
+       
     </table>
 </div>

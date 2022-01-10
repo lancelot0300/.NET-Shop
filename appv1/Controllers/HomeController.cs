@@ -13,9 +13,9 @@ namespace appv1.Controllers
     {
         private readonly IObslugaBazyDanych obslugaBazyDanych;
 
-        private readonly DziekanatContext bazaDanychDziekanatu;
+        private readonly SklepContext bazaDanychDziekanatu;
 
-        public HomeController(IObslugaBazyDanych obslugaBazyDanych, DziekanatContext bazaDanychDziekanatu)
+        public HomeController(IObslugaBazyDanych obslugaBazyDanych, SklepContext bazaDanychDziekanatu)
         {
             this.obslugaBazyDanych = obslugaBazyDanych;
             this.bazaDanychDziekanatu = bazaDanychDziekanatu;
@@ -38,40 +38,11 @@ namespace appv1.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult DodajZajecia(Zajecia zajecia)
-        {
-            try
-            {
-                obslugaBazyDanych.DodajZajecia(zajecia);
-                return View("DodanoZajecia", zajecia);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpGet]
-        [Route("{controller}/Students")]
-        public IActionResult Students()
+        [Route("{controller}/Products")]
+        public IActionResult Products()
         {
-            List<Student> students = bazaDanychDziekanatu.Students.ToList();
-            return View(students);
-        }
-        [HttpGet]
-        [Route("{controller}/PlanZajec")]
-        public IActionResult PlanZajec()
-        {
-            return View(obslugaBazyDanych.GetCourses());
-        }
-        [HttpDelete]
-        [Route("{controller}/UsunZajecia/{id}")]
-        public IActionResult UsunZajecia(int id)
-        {
-            obslugaBazyDanych.UsunZajecia(id);
-
-            return View("Zajecia", obslugaBazyDanych.GetCourses());
+            return View(obslugaBazyDanych.GetProducts());
         }
 
 
@@ -82,27 +53,7 @@ namespace appv1.Controllers
             return View();
         }
 
-        [HttpPost]
-        [Route("{controller}/DodajStudenta")]
-        public IActionResult DodajStudenta(Student student)
-        {
-            try
-            {
-                obslugaBazyDanych.DodajStudenta(student);
-                return View("DodanoStudenta", student);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("{controller}/DodanoStudenta")]
-        public IActionResult DodanoStudenta()
-        {
-            return View();
-        }
+       
 
         [Route("{controller}/v1/Echo/{message}")]
         [HttpGet]

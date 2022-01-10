@@ -6,12 +6,13 @@ namespace appv1.Interfaces
 {
     public interface IObslugaBazyDanych
     {
-        public DziekanatContext Context { get; set; }
-        public void DodajZajecia(Zajecia zajecia);
-        public void DodajStudenta(Student student);
-        void UsunZajecia(int id);
+        public SklepContext Context { get; set; }
 
-        public List<Student> GetStudents();
-        public List<Zajecia> GetCourses();
+
+        public void DodajProduct(Products product);
+
+
+
+        public List<Products> GetProducts();
     }
 }

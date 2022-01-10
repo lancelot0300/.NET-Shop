@@ -35,8 +35,8 @@ namespace appv1
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<DziekanatContext>();
-                    DziekanatDatabaseInitializer.Initialize(context);
+                    var context = services.GetRequiredService<SklepContext>();
+                    SklepIntInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {

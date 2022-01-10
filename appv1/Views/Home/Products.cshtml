@@ -1,0 +1,32 @@
+﻿@model List<Products>
+
+@{
+    ViewData["Title"] = "Lista Produktów";
+}
+
+<div>
+    <h1>Studenci</h1>
+    <table>
+        <thead>
+            <tr> ID </tr>
+            <tr> Nazwa </tr>
+            <tr> Kod Produktu </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td> @item.ID </td>
+                    <td> @item.Nazwa </td>
+                    <td> @item.KodProduktu </td>
+                    <td>@using( @Html.BeginForm("UsunProduct", "Home" , new {id = item.ID}))
+                        {
+                            <input type="submit"  value="Usun" />
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

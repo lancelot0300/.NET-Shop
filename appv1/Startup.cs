@@ -27,14 +27,14 @@ namespace appv1
         {
             services.AddSwaggerGen(x =>
             {
-                x.SwaggerDoc("v1", new OpenApiInfo { Title = "AppMVC API", Version = "v1" });
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "SklepInt", Version = "v1" });
             });
 
             services.AddSingleton<IObslugaBazyDanych, ObslugaBazyDanych>();
 
 
 
-            services.AddDbContext<DziekanatContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DziekanatDatabaseConnection")));
+            services.AddDbContext<SklepContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DziekanatDatabaseConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

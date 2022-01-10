@@ -11,46 +11,36 @@ namespace appv1.Services
 {
     public class ObslugaBazyDanych : IObslugaBazyDanych
     {
-        public DziekanatContext Context { get; set; }
+        public SklepContext Context { get; set; }
 
-        public void DodajZajecia(Zajecia zajecia)
+        public void DodajProduct(Products products)
         {
-            if (zajecia.TerminZajec < DateTime.Now)
-                throw new ArgumentException("Time must be in a future");
+            if (products.KodProduktu == "")
+                throw new ArgumentException("Kod Produktu musi być podany");
 
 
-            Context.Zajecia.Add(zajecia);
+            Context.Products.Add(products);
             Context.SaveChanges();
         }
 
-        public void DodajStudenta(Student student)
+        public List<Products> GetProduct()
         {
-            if (!int.TryParse(student.NumerIndeksu, out int indexNumber))
-                throw new ArgumentException("Index number must be a number.");
-            if (indexNumber > 1000 || indexNumber <= 0)
-                throw new ArgumentException("Index number must positive number, less than 1000");
+            List<Products> products= Context.Products.ToList();
+            return products;
+        }
 
-
-            Context.Students.Add(student);
+        public void UsunProduct(int id)
+        {
+            Products product = Context.Products.Find(id);
+            Context.Products.Remove(product);
             Context.SaveChanges();
         }
 
-        public List<Student> GetStudents()
+        public List<Products> GetProducts()
         {
-            List<Student> students = Context.Students.ToList();
-            return students;
-        }
-        public List<Zajecia> GetCourses()
-        {
-            List<Zajecia> course = Context.Zajecia.ToList();
-            return course;
-        }
+            List<Products> products = Context.Products.ToList();
 
-        public void UsunZajecia(int id)
-        {
-            Zajecia course = Context.Zajecia.Find(id);
-            Context.Zajecia.Remove(course);
-            Context.SaveChanges();
+            return products;
         }
     }
 }

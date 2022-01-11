@@ -13,14 +13,14 @@ namespace appv1.Controllers
     {
         private readonly IObslugaBazyDanych obslugaBazyDanych;
 
-        private readonly SklepContext bazaDanychDziekanatu;
+        private readonly SklepContext bazaDanych;
 
-        public HomeController(IObslugaBazyDanych obslugaBazyDanych, SklepContext bazaDanychDziekanatu)
+        public HomeController(IObslugaBazyDanych obslugaBazyDanych, SklepContext bazaDanych)
         {
             this.obslugaBazyDanych = obslugaBazyDanych;
-            this.bazaDanychDziekanatu = bazaDanychDziekanatu;
+            this.bazaDanych = bazaDanych;
 
-            obslugaBazyDanych.Context = bazaDanychDziekanatu;
+            obslugaBazyDanych.Context = bazaDanych;
         }
         public IActionResult Index()
         {
@@ -32,11 +32,7 @@ namespace appv1.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult DodajZajecia()
-        {
-            return View();
-        }
+ 
 
         [HttpGet]
         [Route("{controller}/Products")]
@@ -46,12 +42,6 @@ namespace appv1.Controllers
         }
 
 
-        [HttpGet]
-        [Route("{controller}/DodajStudenta")]
-        public IActionResult DodajStudenta()
-        {
-            return View();
-        }
 
 
 

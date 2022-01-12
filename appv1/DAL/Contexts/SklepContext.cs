@@ -11,7 +11,8 @@ namespace appv1.DAL.Contexts
         }
 
 
-    public DbSet<Products> Products { get; set; }
+        public DbSet<Products> Products { get; set; }
+
         public DbSet<Login> Login { get; set; }
     }
 }

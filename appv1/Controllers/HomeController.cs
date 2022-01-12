@@ -109,7 +109,7 @@ namespace appv1.Controllers
             if (zdany == true)
             {
                 HttpContext.Session.SetString("username", username);
-                return View("Success");
+                return View("Index");
             }
             else
             {

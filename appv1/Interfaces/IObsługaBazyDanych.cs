@@ -10,10 +10,11 @@ namespace appv1.Interfaces
 
 
         public void DodajProduct(Products product);
-
-
+        public void PobierzDane(string user);
+        public List<Login> GetUsers();
 
         public List<Products> GetProducts();
         void UsunProduct(int id);
+        void Zarejestruj(Login user);
     }
 }

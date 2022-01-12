@@ -29,9 +29,8 @@ namespace appv1
             {
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "SklepInt", Version = "v1" });
             });
-
+          
             services.AddSingleton<IObslugaBazyDanych, ObslugaBazyDanych>();
-
 
 
             services.AddDbContext<SklepContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DziekanatDatabaseConnection")));
@@ -39,6 +38,18 @@ namespace appv1
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddMvc().AddSessionStateTempDataProvider();
+
+            services.AddHttpContextAccessor();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +66,17 @@ namespace appv1
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            app.UseSession();
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
+            app.UseCookiePolicy();
+
+           
+            app.UseStaticFiles();
+
 
             app.UseRouting();
 

@@ -37,5 +37,27 @@ namespace appv1.Services
 
             return products;
         }
+
+
+
+        void IObslugaBazyDanych.PobierzDane(string user)
+        {
+            Login uzy = Context.Login.Find(user);
+           
+        }
+        public List<Login> GetUsers()
+        {
+            List<Login> users = Context.Login.ToList();
+
+            return users;
+        }
+
+        public void Zarejestruj(Login user)
+        {
+
+            Context.Login.Add(user);
+            Context.SaveChanges();
+
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace appv1.Controllers
         private readonly IObslugaBazyDanych obslugaBazyDanych;
 
         private readonly SklepContext bazaDanych;
+        
 
         public HomeController(IObslugaBazyDanych obslugaBazyDanych, SklepContext bazaDanych)
         {
@@ -24,7 +25,16 @@ namespace appv1.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
+            {
+                return View("Login");
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         public IActionResult Privacy()
@@ -32,7 +42,7 @@ namespace appv1.Controllers
             return View();
         }
 
- 
+
 
         [HttpGet]
         [Route("{controller}/Products")]
@@ -59,7 +69,63 @@ namespace appv1.Controllers
             obslugaBazyDanych.UsunProduct(id);
 
             return View("Products", obslugaBazyDanych.GetProducts());
+
+
         }
 
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+
+            var users = obslugaBazyDanych.GetUsers();
+            bool zdany = false;
+            foreach (var user in users)
+            {
+                if (user.UserName == username && user.Password == password)
+                {
+                    zdany = true;
+                }      
+
+            }
+
+           if (zdany == true)
+            {
+                HttpContext.Session.SetString("username", username);
+                return View("Success");
+            }
+            else
+            {
+                ViewBag.error = "Invalid Account";
+                return View("Index");
+
+            }
+
+
+
+        }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Register(Login user)
+        {
+            try
+            { 
+                obslugaBazyDanych.Zarejestruj(user);
+                return View("Login", user);
+            }
+            catch (Exception ex)
+            {
+                return View("Index");
+            }
+        }
     }
 }

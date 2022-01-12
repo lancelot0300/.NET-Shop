@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Session;
 
 namespace appv1.DAL.Contexts
 {
@@ -12,6 +13,7 @@ namespace appv1.DAL.Contexts
         {
             Context.Database.EnsureCreated();
             InitializeProducts(Context);
+            InitializeLogin(Context);
         }
 
        
@@ -33,6 +35,26 @@ namespace appv1.DAL.Contexts
                 Context.Products.Add(c);
             }
             Context.SaveChanges();
+        }
+        private static void InitializeLogin(SklepContext Context)
+        {
+            if (Context.Login.Any())
+            {
+                return;
+            }
+
+            var login = new Login[]
+            {
+                new Login{UserName = "admin",      Password = "1234"}
+              
+
+            };
+            foreach (Login c in login)
+            {
+                Context.Login.Add(c);
+            }
+            Context.SaveChanges();
+            
         }
     }
 

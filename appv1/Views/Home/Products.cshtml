@@ -18,9 +18,14 @@
               <td>Kod Produktu</td>
               <td>Ilość</td>
               <td>Cena</td>
-              <td>Usuń Produkt</td>
-                
+              
+             @if(!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("username")))
+            {
+                 <td>Usuń Produkt</td>
+            }
             </tr>
+             
+                
               
         
         
@@ -32,11 +37,16 @@
                     <td> @item.KodProduktu </td>
                     <td> @item.Ilosc </td>
                     <td> @item.Cena  zł/kg</td>
-                    <td >@using( @Html.BeginForm("UsunProduct", "Home" , new {id = item.ID}))
+
+             @if(!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("username")))
+            {
+               <td > @using( @Html.BeginForm("UsunProduct", "Home" , new {id = item.ID}))
                         {
                             <input type="submit"  value="Usun" />
                         }
                     </td>
+            }
+                    
 
                 </tr>
             }

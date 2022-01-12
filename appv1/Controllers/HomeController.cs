@@ -113,8 +113,8 @@ namespace appv1.Controllers
             }
             else
             {
-                ViewBag.error = "Invalid Account";
-                return View("Index");
+                ViewBag.error = "Zły login lub hasło";
+                return View("Login");
 
             }
 

@@ -132,8 +132,21 @@ namespace appv1.Controllers
         {
             try
             {
-                obslugaBazyDanych.Zarejestruj(user);
+                var users = obslugaBazyDanych.GetUsers();  
+                foreach ( var obiekt in users)
+                {
+                    if (user.UserName == obiekt.UserName)
+                    {
+                        ViewBag.error = "Użytkownij już istnieje";
+                        return View();
+                    }
+                    else
+                    {
+                        obslugaBazyDanych.Zarejestruj(user); 
+                    }
+                }
                 return View("Login", user);
+
             }
             catch (Exception ex)
             {

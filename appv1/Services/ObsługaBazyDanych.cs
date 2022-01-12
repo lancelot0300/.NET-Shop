@@ -59,5 +59,12 @@ namespace appv1.Services
             Context.SaveChanges();
 
         }
+
+        public void DodajProdukt(Products products)
+        {
+
+            Context.Products.Add(products);
+            Context.SaveChanges();
+        }
     }
 }

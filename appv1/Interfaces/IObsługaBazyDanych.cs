@@ -14,7 +14,7 @@ namespace appv1.Interfaces
         public List<Login> GetUsers();
 
         public List<Products> GetProducts();
-        void UsunProduct(int id);
-        void Zarejestruj(Login user);
+        public void UsunProduct(int id);
+        public void Zarejestruj(Login user);
     }
 }

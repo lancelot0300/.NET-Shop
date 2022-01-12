@@ -162,5 +162,34 @@ namespace appv1.Controllers
             return View("Login");
 
         }
+
+        [HttpGet]
+        public IActionResult DodajProdukt()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
+            {
+                ViewBag.Error = "Musisz się zalogować";
+                return View("Login");
+            }
+            else
+            {
+                return View();
+            }
+           
+        }
+
+        [HttpPost]
+        public IActionResult DodajProdukt(Products products)
+        {
+            try
+            {
+                obslugaBazyDanych.DodajProduct(products);
+                return View("Products", obslugaBazyDanych.GetProducts());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

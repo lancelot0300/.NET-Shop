@@ -12,18 +12,18 @@
     {
         <div style="color:red;">@Html.ValidationSummary()</div>
         <div class="row">
-            <div class="col-lg-12">@ViewBag.Message</div>
+            <div class="col-lg-12">@ViewBag.Error</div>
         </div><br />
        
         <div class="row">
-            <div class="col-lg-2">@Html.LabelFor(a => a.UserName)</div>
+            <div class="col-lg-2">Login</div>
             <div class="col-lg-10">@Html.TextBoxFor(a => a.UserName, new { @class = "form-control" })</div>
         </div><br />
         <div class="row">
-            <div class="col-lg-2">@Html.LabelFor(a => a.Password)</div>
+            <div class="col-lg-2">Hasło</div>
             <div class="col-lg-10">@Html.TextBoxFor(a => a.Password, new { @class = "form-control", type="Password" })</div>
         </div><br />
-        <input type="submit" value="Login" class="btn btn-primary" />
+        <input type="submit" value="Zaloguj" class="btn btn-primary" />
     }
     
 </div>

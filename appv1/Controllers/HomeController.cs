@@ -14,7 +14,7 @@ namespace appv1.Controllers
         private readonly IObslugaBazyDanych obslugaBazyDanych;
 
         private readonly SklepContext bazaDanych;
-        
+
 
         public HomeController(IObslugaBazyDanych obslugaBazyDanych, SklepContext bazaDanych)
         {
@@ -28,13 +28,16 @@ namespace appv1.Controllers
 
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
             {
+                ViewBag.Error = "Zaloguj się aby wejść na Stronę główną";
                 return View("Login");
             }
+
             else
             {
+                ViewBag.Message = "Jesteś Zalogowany";
                 return View();
             }
-            
+
         }
 
         public IActionResult Privacy()
@@ -76,7 +79,16 @@ namespace appv1.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
+            {
+                ViewBag.Message = "Jesteś Zalogowany";
+                return View("Index");
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         [HttpPost]
@@ -90,11 +102,11 @@ namespace appv1.Controllers
                 if (user.UserName == username && user.Password == password)
                 {
                     zdany = true;
-                }      
+                }
 
             }
 
-           if (zdany == true)
+            if (zdany == true)
             {
                 HttpContext.Session.SetString("username", username);
                 return View("Success");
@@ -118,7 +130,7 @@ namespace appv1.Controllers
         public IActionResult Register(Login user)
         {
             try
-            { 
+            {
                 obslugaBazyDanych.Zarejestruj(user);
                 return View("Login", user);
             }
@@ -126,6 +138,15 @@ namespace appv1.Controllers
             {
                 return View("Index");
             }
+
+
+        }
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return View("Login");
+
         }
     }
 }

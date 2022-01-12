@@ -26,8 +26,8 @@
         </div><br />
          @if(!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("username")))
             {
-    Login: @HttpContextAccessor.HttpContext.Session.GetString("username");
-    }
+                <p>Login: @HttpContextAccessor.HttpContext.Session.GetString("username")</p>
+              }
      
     
 </div>

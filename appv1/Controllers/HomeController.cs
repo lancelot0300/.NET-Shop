@@ -126,6 +126,7 @@ namespace appv1.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Register(Login user)
         {

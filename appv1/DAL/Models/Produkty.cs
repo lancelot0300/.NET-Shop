@@ -11,6 +11,10 @@ namespace appv1.DAL.Models
         public string Nazwa { get; set; }
 
         public string KodProduktu { get; set; }
-        
+
+        public int Ilosc { get; set; }
+
+        public decimal Cena { get; set; }
+
     }
 }

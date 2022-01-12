@@ -16,6 +16,8 @@
               <td>ID</td>
               <td>Nazwa</td>
               <td>Kod Produktu</td>
+              <td>Ilość</td>
+              <td>Cena</td>
               <td>Usuń Produkt</td>
                 
             </tr>
@@ -28,6 +30,8 @@
                     <td> @item.ID </td>
                     <td> @item.Nazwa </td>
                     <td> @item.KodProduktu </td>
+                    <td> @item.Ilosc </td>
+                    <td> @item.Cena  zł/kg</td>
                     <td >@using( @Html.BeginForm("UsunProduct", "Home" , new {id = item.ID}))
                         {
                             <input type="submit"  value="Usun" />

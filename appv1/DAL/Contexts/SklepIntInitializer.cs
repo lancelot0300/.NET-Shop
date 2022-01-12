@@ -26,8 +26,8 @@ namespace appv1.DAL.Contexts
 
             var products = new Products[]
             {
-                new Products{Nazwa = "Perogi",      KodProduktu = "P1"},
-                new Products{Nazwa = "Fasolka",      KodProduktu = "F1" }
+                new Products{Nazwa = "Perogi",      KodProduktu = "P1" , Ilosc = 10, Cena = 5},
+                new Products{Nazwa = "Fasolka",      KodProduktu = "F1" , Ilosc = 10, Cena = 1 }
                 
             };
             foreach (Products c in products)

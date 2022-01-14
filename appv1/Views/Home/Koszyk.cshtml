@@ -1,0 +1,44 @@
+﻿
+
+@{
+    ViewData["Title"] = "Lista Produktów";
+    @using Microsoft.AspNetCore.Http;
+    @using appv1.Controllers
+    @inject IHttpContextAccessor HttpContextAccessor
+
+    List<Koszyk> list = HttpContextAccessor.HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
+   
+}
+<div>
+    <h1>Koszyk</h1>
+    <table class="tabela">
+       
+            <tr> 
+                
+                
+              <td>Nazwa</td>
+              <td>Ilość</td>
+              <td>Cena</td>
+               <td>Usuń</td>
+            
+              </tr>
+
+              
+            @foreach (var item in list)
+            {
+                <tr>
+                    
+                    <td> @item.Product.Nazwa </td>
+                    <td> @item.Ilosc </td>
+                    <td> @item.Product.Cena </td>
+                    <td > @using( @Html.BeginForm("UsunZKoszyka", "Home" , new {id = item.Product.ID}))
+                        {
+                            <input type="submit"  value="Usun" />
+                        }
+                    </td>
+                   
+
+            </tr>
+            }
+       
+    </table>

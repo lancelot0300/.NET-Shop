@@ -7,6 +7,7 @@ using appv1.DAL.Models;
 using appv1.DAL.Contexts;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace appv1.Services
 {
     public class ObslugaBazyDanych : IObslugaBazyDanych
@@ -40,11 +41,6 @@ namespace appv1.Services
 
 
 
-        void IObslugaBazyDanych.PobierzDane(string user)
-        {
-            Login uzy = Context.Login.Find(user);
-           
-        }
         public List<Login> GetUsers()
         {
             List<Login> users = Context.Login.ToList();
@@ -66,5 +62,11 @@ namespace appv1.Services
             Context.Products.Add(products);
             Context.SaveChanges();
         }
+        public Products Find(int id)
+        {
+            Products product = Context.Products.Find(id);
+            return product;
+        }
+
     }
 }

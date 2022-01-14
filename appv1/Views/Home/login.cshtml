@@ -1,11 +1,12 @@
 ﻿@model appv1.DAL.Models.Login
 @{
     ViewBag.Title = "Login";
+     @inject IHttpContextAccessor HttpContextAccessor
 
 }
 
 <h2>Login</h2>
-
+<h2>@HttpContextAccessor.HttpContext.Session.GetString("cart")</h2>
 
 <div>
     @using (Html.BeginForm("Login", "Home"))

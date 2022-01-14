@@ -45,8 +45,9 @@ namespace appv1.DAL.Contexts
 
             var login = new Login[]
             {
-                new Login{UserName = "admin",      Password = "1234"}
-              
+                new Login{UserName = "admin",      Password = "1234" , Admin= 1},
+                new Login{UserName = "pawel",      Password = "1234", Admin= 1}
+
 
             };
             foreach (Login c in login)

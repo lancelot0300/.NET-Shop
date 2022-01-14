@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using appv1.DAL.Contexts;
 
@@ -10,9 +11,10 @@ using appv1.DAL.Contexts;
 namespace appv1.Migrations
 {
     [DbContext(typeof(SklepContext))]
-    partial class SklepContextModelSnapshot : ModelSnapshot
+    [Migration("20220114193719_ShoppingCart_Added")]
+    partial class ShoppingCart_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

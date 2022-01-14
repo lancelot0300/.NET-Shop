@@ -40,5 +40,15 @@
 
             </tr>
             }
+            <tr>
+            <td align="right" colspan="3">Sum</td>
+            <td>
+                @{
+                    List<Koszyk> cart = HttpContextAccessor.HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
+                    var total = cart.Sum(item => item.Product.Cena * item.Ilosc);
+                }
+                @total
+            </td>
+        </tr>
        
     </table>

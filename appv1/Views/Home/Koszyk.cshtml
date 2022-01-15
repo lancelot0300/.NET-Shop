@@ -17,9 +17,10 @@
                 
                 
               <td>Nazwa</td>
+              <td>Usuń</td>
+              <td>Dodaj</td>
               <td>Ilość</td>
               <td>Cena</td>
-               <td>Usuń</td>
             
               </tr>
 
@@ -29,19 +30,22 @@
                 <tr>
                     
                     <td> @item.Product.Nazwa </td>
-                    <td> @item.Ilosc </td>
-                    <td> @item.Product.Cena </td>
                     <td > @using( @Html.BeginForm("UsunZKoszyka", "Home" , new {id = item.Product.ID}))
                         {
                             <input type="submit"  value="Usun" />
                         }
                     </td>
-                   
-
+                    <td > @using( @Html.BeginForm("DodajDoKoszyka", "Home" , new {id = item.Product.ID}))
+                        {
+                            <input type="submit"  value="Dodaj" />
+                        }
+                    </td>
+                    <td> @item.Ilosc </td>
+                    <td> @item.Product.Cena </td>
             </tr>
             }
             <tr>
-            <td align="right" colspan="3">Sum</td>
+            <td align="right" colspan="4">Do zapłaty </td>
             <td>
                 @{
                     List<Koszyk> cart = HttpContextAccessor.HttpContext.Session.GetComplexData<List<Koszyk>>("cart");

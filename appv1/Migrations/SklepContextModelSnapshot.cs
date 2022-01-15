@@ -34,11 +34,11 @@ namespace appv1.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(15)");
 
                     b.HasKey("ID");
 
@@ -54,7 +54,7 @@ namespace appv1.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<decimal>("Cena")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(17,3)");
 
                     b.Property<int>("Ilosc")
                         .HasColumnType("int");

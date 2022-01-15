@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using appv1.Interfaces;
 using appv1.DAL.Models;
 using appv1.DAL.Contexts;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -16,6 +17,8 @@ namespace appv1.Services
 
         public void DodajProduct(Products products)
         {
+            
+
             if (products.KodProduktu == "")
                 throw new ArgumentException("Kod Produktu musi być podany");
 
@@ -39,6 +42,20 @@ namespace appv1.Services
             return products;
         }
 
+        public List<Products> GetKategory(string name)
+        {
+            List<Products> products = GetProducts();
+            List<Products> newa = new List<Products>();
+            foreach (Products p in products)
+            {
+                if (p.Kategoria == name)
+                {
+                    newa.Add(p);
+                }
+            }
+            return newa;
+        }
+
 
 
         public List<Login> GetUsers()
@@ -56,12 +73,6 @@ namespace appv1.Services
 
         }
 
-        public void DodajProdukt(Products products)
-        {
-
-            Context.Products.Add(products);
-            Context.SaveChanges();
-        }
         public Products Find(int id)
         {
             Products product = Context.Products.Find(id);

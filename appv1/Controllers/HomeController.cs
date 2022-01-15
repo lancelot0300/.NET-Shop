@@ -95,15 +95,18 @@ namespace appv1.Controllers
         }
 
         [HttpPost]
-        [Route("{controller}/UsunProduct/{id}")]
         public IActionResult UsunProduct(int id)
         {
+
             obslugaBazyDanych.UsunProduct(id);
 
-            return View("Products", obslugaBazyDanych.GetProducts());
+            return View("Products");
 
 
         }
+
+
+
 
         [HttpGet]
         public IActionResult Login()
@@ -178,7 +181,7 @@ namespace appv1.Controllers
                     ViewBag.error = "Użytkownij już istnieje";
                     return View();
                 }
-               
+
             }
             obslugaBazyDanych.Zarejestruj(user);
             ViewBag.error = "Udało się";
@@ -186,7 +189,7 @@ namespace appv1.Controllers
         }
 
 
-     
+
         [HttpPost]
         public IActionResult Logout()
         {
@@ -195,34 +198,7 @@ namespace appv1.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult DodajProdukt()
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
-            {
-                ViewBag.Error = "Musisz się zalogować";
-                return View("Login");
-            }
-            else
-            {
-                return View();
-            }
 
-        }
-
-        [HttpPost]
-        public IActionResult DodajProdukt(Products products)
-        {
-            try
-            {
-                obslugaBazyDanych.DodajProduct(products);
-                return View("Products", obslugaBazyDanych.GetProducts());
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
         [HttpPost]
         public ActionResult Buy(int id)
         {
@@ -230,7 +206,7 @@ namespace appv1.Controllers
             Products product = obslugaBazyDanych.Find(id);
             if (HttpContext.Session.GetString("cart") == null)
             {
-                
+
                 List<Koszyk> cart = new List<Koszyk>
                 {
                     new Koszyk { Product = product, Ilosc = 1 }
@@ -240,19 +216,19 @@ namespace appv1.Controllers
             }
             else
             {
-                
-                    List<Koszyk> cart = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
-                    int index = isExist(id);
-                    if (index != -1)
-                    {
-                        cart[index].Ilosc++;
-                    }
-                    else
-                    {
-                        cart.Add(new Koszyk { Product = product, Ilosc = 1 });
-                    }
-                    HttpContext.Session.SetComplexData("cart", cart);
-                
+
+                List<Koszyk> cart = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
+                int index = isExist(id);
+                if (index != -1)
+                {
+                    cart[index].Ilosc++;
+                }
+                else
+                {
+                    cart.Add(new Koszyk { Product = product, Ilosc = 1 });
+                }
+                HttpContext.Session.SetComplexData("cart", cart);
+
             }
             return RedirectToAction("Koszyk");
 
@@ -286,6 +262,36 @@ namespace appv1.Controllers
             }
             HttpContext.Session.SetComplexData("cart", cart);
             return RedirectToAction("Koszyk");
+        }
+
+        [HttpGet]
+        public IActionResult DodajProdukt()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
+            {
+                ViewBag.Error = "Musisz się zalogować";
+                return View("Login");
+            }
+            else
+            {
+                return View();
+            }
+
+        }
+        [HttpPost]
+        public IActionResult DodajProdukt(Products products)
+        {
+            try
+            {
+                if (products.Cena.ToString().Contains(".")) throw new Exception();
+
+                obslugaBazyDanych.DodajProduct(products);
+                return View("Products", obslugaBazyDanych.GetProducts());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

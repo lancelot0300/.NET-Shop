@@ -12,6 +12,8 @@ namespace appv1.Interfaces
         public void DodajProduct(Products product);
         public List<Login> GetUsers();
 
+        public List<Products> GetKategory( string name);
+
         public List<Products> GetProducts();
         public void UsunProduct(int id);
         public void Zarejestruj(Login user);

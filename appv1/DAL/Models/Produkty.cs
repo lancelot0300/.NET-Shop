@@ -16,5 +16,7 @@ namespace appv1.DAL.Models
 
         public decimal Cena { get; set; }
 
+        public string Kategoria { get; set; }
+
     }
 }

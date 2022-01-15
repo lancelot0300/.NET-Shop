@@ -8,4 +8,58 @@
 
 <div>
     <h1>Słodycze</h1>
+       <table class="tabela">
+
+        <tr> 
+
+
+            <td>ID</td>
+            <td>Nazwa</td>
+            <td>Kod Produktu</td>
+            <td>Ilość</td>
+            <td>Cena</td>
+            @if(@HttpContextAccessor.HttpContext.Session.GetString("admin") == "admin")
+            {
+                 <td>Usuń Produkt</td>
+            }
+           
+            @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("username")))
+            {
+                <td>Dodaj do koszyka</td>
+            }
+            </tr>             
+                
+        
+        
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td> @item.ID </td>
+                    <td> @item.Nazwa </td>
+                    <td> @item.KodProduktu </td>
+                    <td> @item.Ilosc </td>
+                    <td> @item.Cena  zł/kg</td>
+
+             @if(@HttpContextAccessor.HttpContext.Session.GetString("admin") == "admin")
+            {
+               <td > @using( @Html.BeginForm("UsunProduct", "Home" , new {id = item.ID}))
+                        {
+                            <input type="submit"  value="Usun" />
+                        }
+                    </td>
+            }
+            @if(!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("username")))
+            {
+               <td > @using( @Html.BeginForm("Buy", "Home" , new {id = item.ID}))
+                        {
+                            <input type="submit"  value="Dodaj" />
+                        }
+                    </td>
+            }
+                    
+
+                </tr>
+            }
+       
+    </table>
 </div>

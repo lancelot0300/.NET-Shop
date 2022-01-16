@@ -1,5 +1,4 @@
 ﻿
-
 @{
     ViewData["Title"] = "Lista Produktów";
     @using Microsoft.AspNetCore.Http;
@@ -16,33 +15,26 @@
     <table class="tabela">
        
             <tr> 
-                
-                
-              <td>Nazwa</td>
-              <td>Usuń</td>
-              <td>Dodaj</td>
-              <td>Ilość</td>
-              <td>Cena</td>
-            
-              </tr>
+              <th class="top">Nazwa</th>
+              <th class="top" colspan="3">Ilość</th>
+              <th class="top">Cena</th>
+            </tr>
 
-              
             @foreach (var item in list)
             {
-                <tr>
-                    
+                <tr>                
                     <td> @item.Product.Nazwa </td>
-                    <td > @using( @Html.BeginForm("UsunZKoszyka", "Home" , new {id = item.Product.ID}))
+                    <td colspan="3">
+                        @using( @Html.BeginForm("Buy", "Home" , new {id = item.Product.ID}))
                         {
-                            <input type="submit"  value="Usun" />
-                        }
-                    </td>
-                    <td > @using( @Html.BeginForm("Buy", "Home" , new {id = item.Product.ID}))
+                            <button type="submit" class="form-control btn-up btn btn-primary submit " >+</button>
+                        }                                       
+                         @item.Ilosc 
+                        @using( @Html.BeginForm("UsunZKoszyka", "Home" , new {id = item.Product.ID}))
                         {
-                            <input type="submit"  value="Dodaj" />
-                        }
+                            <button type="submit" class="form-control btn-up btn btn-primary submit " >-</button>
+                        }  
                     </td>
-                    <td> @item.Ilosc </td>
                     <td> @item.Product.Cena </td>
             </tr>
             }

@@ -219,7 +219,7 @@ namespace appv1.Controllers
                     cart[index].Ilosc++;
                     if (cart[index].Ilosc > ilosc)
                     {
-                        ViewBag.Message = "Nie można dodać tak dużej ilośći maksymalnie: " + ilosc;
+                        ViewBag.Message = "Nie można dodać tak dużej ilośći " + product.Nazwa +", maksymalnie: " + ilosc;
                         return View("Koszyk");
                     }
                 }

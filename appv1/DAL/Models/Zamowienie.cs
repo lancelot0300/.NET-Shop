@@ -1,4 +1,6 @@
-﻿namespace appv1.DAL.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace appv1.DAL.Models
 {
     public class Zamowienie
     {

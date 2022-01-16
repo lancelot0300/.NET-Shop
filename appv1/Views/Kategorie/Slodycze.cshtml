@@ -14,27 +14,23 @@
        <table class="tabela">
 
         <tr> 
-
-
-            <td>ID</td>
-            <td>Nazwa</td>
-            <td>Kod Produktu</td>
-            <td>Ilość</td>
-            <td>Cena</td>
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Kod Produktu</th>
+            <th>Ilość</th>
+            <th>Cena</th>
            @if(user != null)
         {if (user.Admin == 1)
     {
-                    <td>Usuń Produkt</td>
+                    <th>Usuń Produkt</th>
                 }}
            
             @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("username")))
             {
-                <td>Dodaj do koszyka</td>
+                <th>Dodaj do koszyka</th>
             }
-            </tr>             
+        </tr>             
                 
-        
-        
             @foreach (var item in Model)
             {
                 <tr>
@@ -48,7 +44,7 @@
                  {
                <td > @using( @Html.BeginForm("UsunProduct", "Home" , new {id = item.ID}))
                         {
-                            <input type="submit"  value="Usun" />
+                            <input type="submit" class="form-control btn-up btn btn-primary submit" value="-" />
                         }
                     </td>
             }}
@@ -56,14 +52,11 @@
             {
                <td > @using( @Html.BeginForm("Buy", "Home" , new {id = item.ID}))
                         {
-                            <input type="submit"  value="Dodaj" />
+                            <input type="submit" class="form-control btn-table btn btn-primary submit" value="+" />
                         }
                     </td>
             }
-                    
-
                 </tr>
             }
-       
     </table>
 </div>

@@ -208,6 +208,7 @@ namespace appv1.Controllers
                 };
                 HttpContext.Session.SetComplexData("cart", cart);
                 return RedirectToAction("Koszyk");
+
             }
             else
             {
@@ -319,10 +320,10 @@ namespace appv1.Controllers
 
             HttpContext.Session.Remove("cart");
 
+
             return View("Index");
            
         }
-      
     }
 }
 

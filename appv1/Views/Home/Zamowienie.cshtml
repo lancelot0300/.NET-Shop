@@ -1,0 +1,86 @@
+﻿@model appv1.DAL.Models.Zamowienie
+@{
+    ViewData["Title"] = "Lista Produktów";
+    @using Microsoft.AspNetCore.Http;
+    @using appv1.Controllers
+@using appv1.Models
+    @inject IHttpContextAccessor HttpContextAccessor
+
+    List<Koszyk> list = HttpContextAccessor.HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
+    Login user = HttpContextAccessor.HttpContext.Session.GetComplexData<Login>("user");
+}
+
+<h2></h2>
+
+<div>
+              
+            <table class="tabela">
+       
+            <tr> 
+                
+                
+              <td>Nazwa</td>
+              <td>Ilość</td>
+              <td>Cena</td>
+            
+              </tr>
+
+              
+            @foreach (var item in list)
+            {
+                <tr>
+                    <td> @item.Product.Nazwa </td>
+                    <td> @item.Ilosc </td>
+                    <td> @item.Product.Cena </td>
+                 </tr>
+            }
+            <tr>
+            <td align="right" colspan="2">Do zapłaty </td>
+            <td>
+                @{
+                    List<   Koszyk> cart = HttpContextAccessor.HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
+                    var total = cart.Sum(item => item.Product.Cena * item.Ilosc);
+                }
+                @total
+            </td>
+        </tr>
+       
+        
+    </table>
+    <br />
+    
+<form asp-action="Zamowienie">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="UserId" value=@user.ID />
+    <div class="form-group">
+        <label asp-for="Miejscowosc" class="control-label"></label>
+        <input asp-for="Miejscowosc" class="form-control" />
+        <span asp-validation-for="Miejscowosc" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Ulica" class="control-label"></label>
+        <input type="text" asp-for="Ulica" class="form-control" />
+        <span asp-validation-for="Ulica" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="KodPocztowy" class="control-label"></label>
+        <input asp-for="KodPocztowy" class="form-control" />
+        <span asp-validation-for="KodPocztowy" class="text-danger"></span>
+    </div>
+        <div class="form-group">
+        <label asp-for="NumerDomu" class="control-label"></label>
+        <input type="text" asp-for="NumerDomu" class="form-control" />
+        <span asp-validation-for="NumerDomu" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NumerMieszkania" class="control-label"></label>
+        <input type="text" asp-for="NumerMieszkania" class="form-control" />
+        <span asp-validation-for="NumerMieszkania" class="text-danger"></span>
+    </div>
+   
+  
+    <div class="form-group">
+        <input type="submit" value="Zamów" class="btn btn-primary" />
+    </div>
+</form>
+    </div>

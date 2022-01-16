@@ -3717,7 +3717,10 @@ input[type="button"].btn-block {
     padding: 0.25rem 1.5rem;
     color: #212529;
 }
-
+.btn-kosz
+{
+    width:15%;
+}
 .btn-group,
 .btn-group-vertical {
     position: relative;

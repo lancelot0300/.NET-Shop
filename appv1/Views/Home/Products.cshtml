@@ -3,11 +3,14 @@
 @{
     ViewData["Title"] = "Lista Produktów";
     @using Microsoft.AspNetCore.Http;
-    @inject IHttpContextAccessor HttpContextAccessor
+    @using appv1.Controllers
+    @inject IHttpContextAccessor HttpContextAccessor;
+    Login user =  HttpContextAccessor.HttpContext.Session.GetComplexData<Login>("user");
 }
 
 <div>
     <h1>Produkty</h1>
+    <h3>@ViewBag.Message</h3>
  </div>
 
     <div class="form-group">
@@ -22,9 +25,11 @@
     <div class="form-group">
 		 <button type="button" class="form-control btn btn-primary submit px-3" onclick='window.location = "@Url.Action("Slodycze", "Kategorie")";'>Słodycze</button>
 	</div>
-	  @if(@HttpContextAccessor.HttpContext.Session.GetString("admin") == "admin")
-            {
+    @if(user != null)
+    {if (user.Admin == 1)
+{
                 <div class="form-group">
 		 <button type="button" class="form-control btn btn-primary submit px-3" onclick='window.location = "@Url.Action("DodajProdukt", "Home")";'>Dodaj Produkty</button>
 	</div>
-            }
+            }}
+   

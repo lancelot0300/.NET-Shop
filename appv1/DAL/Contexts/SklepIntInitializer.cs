@@ -14,7 +14,9 @@ namespace appv1.DAL.Contexts
             Context.Database.EnsureCreated();
             InitializeProducts(Context);
             InitializeLogin(Context);
-        }
+            InitializeCart(Context);
+            InitializeZamowienia(Context);
+      }
 
        
         private static void InitializeProducts(SklepContext Context)
@@ -58,6 +60,50 @@ namespace appv1.DAL.Contexts
             }
             Context.SaveChanges();
             
+        }
+        private static void InitializeCart(SklepContext Context)
+        {
+            if (Context.Koszyk.Any())
+            {
+                return;
+            }
+
+            var koszyk = new KoszykDoBazy[]
+            {
+                new KoszykDoBazy{ProductId = 5 , Ilosc = 1, ZamowienieId= 1  }
+
+            };
+            foreach (KoszykDoBazy c in koszyk)
+            {
+                Context.Koszyk.Add(c);
+            }
+            Context.SaveChanges();
+        }
+        private static void InitializeZamowienia(SklepContext Context)
+        {
+            if (Context.Zamowienia.Any())
+            {
+                return;
+            }
+
+            var zamowienie = new Zamowienie[]
+            {
+                new Zamowienie{
+                    UserId = 1,
+                    Ulica = "test",
+                    Data = DateTime.Now ,
+                    KodPocztowy = "test",
+                    Miejscowosc = "test",
+                    NumerDomu = "test",
+                    NumerMieszkania = "test" }
+
+
+            };
+            foreach (Zamowienie c in zamowienie)
+            {
+                Context.Zamowienia.Add(c);
+            }
+            Context.SaveChanges();
         }
     }
 

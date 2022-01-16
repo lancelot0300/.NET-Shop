@@ -3,6 +3,7 @@ using appv1.DAL.Contexts;
 using appv1.DAL.Models;
 using appv1.Interfaces;
 using Newtonsoft.Json;
+using appv1.Models;
 
 namespace appv1.Controllers
 {
@@ -41,8 +42,8 @@ namespace appv1.Controllers
         }
         public IActionResult Index()
         {
-
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
+            Login login = HttpContext.Session.GetComplexData<Login>("user");
+            if (login == null )
             {
                 ViewBag.Error = "Zaloguj się aby wejść na Stronę główną";
                 return View("Login");
@@ -63,11 +64,17 @@ namespace appv1.Controllers
 
         public IActionResult Koszyk()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("cart")))
+            Login login = HttpContext.Session.GetComplexData<Login>("user");
+            if (login == null)
             {
-                ViewBag.Error = "Brak produktów w koszyku";
-                return RedirectToAction("Products");
+                ViewBag.Message = "Zaloguj się aby dodać produkty";
+                return View("Login");
             }
+           else if (string.IsNullOrEmpty(HttpContext.Session.GetString("cart")))
+            {
+                ViewBag.Message = "Brak produktów w koszyku";
+                return View("Products");
+            }  
             else
             {
                 return View();
@@ -127,39 +134,21 @@ namespace appv1.Controllers
         public IActionResult Login(string username, string password)
         {
 
-            var users = obslugaBazyDanych.GetUsers();
-            bool zdany = false;
-            bool admin = false;
-            foreach (var user in users)
-            {
-                if (user.UserName == username && user.Password == password)
-                {
-                    zdany = true;
-                    ;
-                    if (user.Admin == 1)
-                    {
-                        admin = true;
-                    }
-                }
+            Login user = obslugaBazyDanych.User(username, password);
 
-            }
 
-            if (zdany == true)
+            if (user != null)
             {
-                if (admin == true)
-                {
-                    HttpContext.Session.SetString("admin", "admin");
-                }
                 HttpContext.Session.SetString("username", username);
+                HttpContext.Session.SetComplexData("user", user);
+
                 return View("Index");
             }
-            else
+            else 
             {
-                ViewBag.error = "Zły login lub hasło";
+                ViewBag.Message = "Nieudało się zalogować";
                 return View("Login");
-
             }
-
 
 
         }
@@ -204,6 +193,12 @@ namespace appv1.Controllers
         {
 
             Products product = obslugaBazyDanych.Find(id);
+            int ilosc = obslugaBazyDanych.SprawdzIlosc(id);
+            if ( ilosc == 0)
+            {
+                ViewBag.Message = "Brak produktu: " + product.Nazwa;
+                return View("Index");
+            }
             if (HttpContext.Session.GetString("cart") == null)
             {
 
@@ -222,6 +217,11 @@ namespace appv1.Controllers
                 if (index != -1)
                 {
                     cart[index].Ilosc++;
+                    if (cart[index].Ilosc > ilosc)
+                    {
+                        ViewBag.Message = "Nie można dodać tak dużej ilośći maksymalnie: " + ilosc;
+                        return View("Koszyk");
+                    }
                 }
                 else
                 {
@@ -264,54 +264,25 @@ namespace appv1.Controllers
             return RedirectToAction("Koszyk");
         }
 
-        [HttpPost]
-        public ActionResult DodajDoKoszyka(int id)
-        {
-
-            Products product = obslugaBazyDanych.Find(id);
-            if (HttpContext.Session.GetString("cart") == null)
-            {
-
-                List<Koszyk> cart = new List<Koszyk>
-                {
-                    new Koszyk { Product = product, Ilosc = 1 }
-                };
-                HttpContext.Session.SetComplexData("cart", cart);
-                return RedirectToAction("Koszyk");
-            }
-            else
-            {
-
-                List<Koszyk> cart = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
-                int index = isExist(id);
-                if (index != -1)
-                {
-                    cart[index].Ilosc++;
-                }
-                else
-                {
-                    cart.Add(new Koszyk { Product = product, Ilosc = 1 });
-                }
-                HttpContext.Session.SetComplexData("cart", cart);
-
-            }
-            return RedirectToAction("Koszyk");
-
-
-        }
-
+       
 
 
         [HttpGet]
         public IActionResult DodajProdukt()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
+            Login login = HttpContext.Session.GetComplexData<Login>("user"); 
+            if (login == null)
             {
-                ViewBag.Error = "Musisz się zalogować";
+                ViewBag.Message = "Musisz się zalogować";
                 return View("Login");
             }
             else
             {
+                if (login.Admin == 0)
+                {
+                    ViewBag.Message = "Musisz być administratorem";
+                    return View("Index");
+                }
                 return View();
             }
 
@@ -331,6 +302,27 @@ namespace appv1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult Zamowienie()
+            {
+               return View();
+            }
+
+
+        [HttpPost]
+        public IActionResult Zamowienie(Zamowienie zamowienie, List<Koszyk> koszyk)
+
+        {
+            koszyk = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
+            obslugaBazyDanych.DodajZamowienie(zamowienie, koszyk);
+
+            HttpContext.Session.Remove("cart");
+
+            return View("Index");
+           
+        }
+      
     }
 }
 

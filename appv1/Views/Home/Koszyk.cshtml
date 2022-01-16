@@ -4,6 +4,7 @@
     ViewData["Title"] = "Lista Produktów";
     @using Microsoft.AspNetCore.Http;
     @using appv1.Controllers
+    @using appv1.Models
     @inject IHttpContextAccessor HttpContextAccessor
 
     List<Koszyk> list = HttpContextAccessor.HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
@@ -11,6 +12,7 @@
 }
 <div>
     <h1>Koszyk</h1>
+    <h3>@ViewBag.Message</h3>
     <table class="tabela">
        
             <tr> 
@@ -35,7 +37,7 @@
                             <input type="submit"  value="Usun" />
                         }
                     </td>
-                    <td > @using( @Html.BeginForm("DodajDoKoszyka", "Home" , new {id = item.Product.ID}))
+                    <td > @using( @Html.BeginForm("Buy", "Home" , new {id = item.Product.ID}))
                         {
                             <input type="submit"  value="Dodaj" />
                         }
@@ -56,3 +58,6 @@
         </tr>
        
     </table>
+    <br />
+    <button type="button" class="form-control btn-kosz btn btn-primary submit px-3" onclick='window.location = "@Url.Action("Zamowienie", "Home")";'>Zamów</button>
+ </div>

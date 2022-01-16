@@ -3,6 +3,7 @@ using appv1.DAL.Contexts;
 using appv1.DAL.Models;
 using appv1.Interfaces;
 using Newtonsoft.Json;
+using appv1.Models;
 
 namespace appv1.Controllers
 {
@@ -44,41 +45,6 @@ namespace appv1.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult Buy(int id)
-        {
-
-            Products product = obslugaBazyDanych.Find(id);
-            if (HttpContext.Session.GetString("cart") == null)
-            {
-
-                List<Koszyk> cart = new List<Koszyk>
-                {
-                    new Koszyk { Product = product, Ilosc = 1 }
-                };
-                HttpContext.Session.SetComplexData("cart", cart);
-                return RedirectToAction("Koszyk");
-            }
-            else
-            {
-
-                List<Koszyk> cart = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
-                int index = isExist(id);
-                if (index != -1)
-                {
-                    cart[index].Ilosc++;
-                }
-                else
-                {
-                    cart.Add(new Koszyk { Product = product, Ilosc = 1 });
-                }
-                HttpContext.Session.SetComplexData("cart", cart);
-
-            }
-            return RedirectToAction("Koszyk");
-
-
-        }
         private int isExist(int id)
         {
             List<Koszyk> cart = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
@@ -110,5 +76,6 @@ namespace appv1.Controllers
       
  
         }
+
     }
 }

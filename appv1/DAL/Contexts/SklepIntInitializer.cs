@@ -29,7 +29,7 @@ namespace appv1.DAL.Contexts
             var products = new Products[]
             {
                 new Products{Nazwa = "Haribo",      KodProduktu = "S1" , Ilosc = 10, Cena = 5 , Kategoria = "Slodycze"},
-                new Products{Nazwa = "Marchewa",      KodProduktu = "W1" , Ilosc = 10, Cena = 5 , Kategoria = "Warzywa"},
+                new Products{Nazwa = "Marchewka",      KodProduktu = "W1" , Ilosc = 10, Cena = 5 , Kategoria = "Warzywa"},
                 new Products{Nazwa = "Mleko",      KodProduktu = "N1" , Ilosc = 1, Cena = 5 , Kategoria = "Nabial"},
                 new Products{Nazwa = "Jablko",      KodProduktu = "O1" , Ilosc = 10, Cena = 1, Kategoria = "Owoce" }
                 

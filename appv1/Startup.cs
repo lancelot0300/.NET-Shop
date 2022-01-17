@@ -33,7 +33,7 @@ namespace appv1
             services.AddSingleton<IObslugaBazyDanych, ObslugaBazyDanych>();
 
 
-            services.AddDbContext<SklepContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DziekanatDatabaseConnection")));
+            services.AddDbContext<SklepContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SklepDatabaseConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

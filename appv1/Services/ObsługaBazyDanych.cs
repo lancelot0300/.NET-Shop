@@ -41,6 +41,44 @@ namespace appv1.Services
 
             return products;
         }
+        public List<KoszykDoBazy> GetKoszykZam(int id)
+        {
+            List<Products> products = GetProducts();
+            List <Zamowienie> zamowienia = Context.Zamowienia.ToList();
+            List<KoszykDoBazy> koszyk = Context.Koszyk.ToList();
+            var koszyk2 = new List<KoszykDoBazy>();
+            foreach (Zamowienie z in zamowienia)
+            {
+                if(z.ID == id)
+                {
+                    foreach (KoszykDoBazy k in koszyk)
+                    {
+                        if (k.ZamowienieId == z.ID)
+                        {
+                            koszyk2.Add(k);
+                        }
+                    }
+                }
+            }
+            return koszyk2;
+        }
+        public List<Products> GetDaneOPro(int id)
+        {
+            List <Products> products =  GetProducts();
+            List<KoszykDoBazy> koszyk = GetKoszykZam( id);
+            var list = new List<Products>();
+            foreach (KoszykDoBazy k in koszyk)
+            {
+               foreach(Products p in products)
+                {
+                    if (p.ID == k.ProductId)
+                    {
+                        list.Add(p);
+                    }
+                }
+            }
+            return list;
+        }
 
         public List<Products> GetKategory(string name)
         {
@@ -128,7 +166,7 @@ namespace appv1.Services
             }
                  
 
-            void UsunIlosc(int id, int ilosc)
+             async void UsunIlosc(int id, int ilosc)
             {
                 var product = Context.Products.Find(id);
                 product.Ilosc = product.Ilosc - ilosc;
@@ -140,5 +178,6 @@ namespace appv1.Services
             var product = Context.Products.Find(id);
             return product.Ilosc;
         }
+
     }
 }

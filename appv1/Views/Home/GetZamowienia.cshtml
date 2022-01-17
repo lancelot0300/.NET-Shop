@@ -1,0 +1,57 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Lista Produktów";
+    @using Microsoft.AspNetCore.Http;
+    @using System.Dynamic
+    @using appv1.Controllers
+    @inject IHttpContextAccessor HttpContextAccessor
+    Login user =  HttpContextAccessor.HttpContext.Session.GetComplexData<Login>("user");
+
+}
+
+
+
+    <div>
+    <h1 class="kategoria">Zamówienie</h1>
+       <table class="tabela">
+
+           <tr>
+               <th  colspan="4">Dane Produktu</th>
+               <th  colspan="2">Dane Zamowienia</th>
+           </tr>
+        <tr> 
+            <th>Nazwa</th>
+            <th>Cena</th>
+            <th>Kod produktu</th>
+            <th>ID produktu</th>
+            <th>Ilosc</th>
+            <th>Nr. Zamowienia</th>
+           
+            </tr>
+            <tr>
+             @foreach (Products product in Model.Produkt)
+            
+             {
+                
+                    <td> @product.Nazwa </td>
+                    <td> @product.Cena </td>
+                    <td> @product.KodProduktu </td>
+                    <td> @product.ID </td>
+                    
+
+            
+            }
+
+
+             @foreach (KoszykDoBazy koszyk in Model.Koszyk)
+            
+             {
+                    <td> @koszyk.Ilosc </td>
+                    <td> @koszyk.ZamowienieId </td>
+                 
+            }
+             </tr> 
+           </table>
+</div>
+

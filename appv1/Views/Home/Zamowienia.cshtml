@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Lista Produktów";
+    @using Microsoft.AspNetCore.Http;
+    @using appv1.Controllers
+    @inject IHttpContextAccessor HttpContextAccessor
+    Login user =  HttpContextAccessor.HttpContext.Session.GetComplexData<Login>("user");
+}
+
+
+         <td > @using( @Html.BeginForm("GetZamowienia", "Home", FormMethod.Post , new {id = "id"}))
+                        {
+                            <input id="id" type="number" name="id"/>
+                            <input type="submit" class="form-control btn-up btn btn-primary submit" value="-" />
+                        }
+                    </td>

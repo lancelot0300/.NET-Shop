@@ -12,5 +12,6 @@ namespace appv1.DAL.Models
         public int Ilosc { get; set; }
         public int ZamowienieId { get; set; }
 
+
     }
 }

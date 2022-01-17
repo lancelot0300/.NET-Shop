@@ -19,6 +19,9 @@ namespace appv1.Interfaces
         public int SprawdzIlosc(int id);
 
         public List<Products> GetProducts();
+        public List<KoszykDoBazy> GetKoszykZam(int id);
+        public List<Products> GetDaneOPro(int id);
+
         public void UsunProduct(int id);
         public void Zarejestruj(Login user);
         Products Find(int id);

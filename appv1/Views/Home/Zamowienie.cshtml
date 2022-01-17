@@ -50,6 +50,7 @@
 <form asp-action="Zamowienie">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="UserId" value=@user.ID />
+    <input type="hidden" asp-for="Data" value=@DateTime.Now />
     <div class="form-group">
         <label asp-for="Miejscowosc" class="control-label"></label>
         <input asp-for="Miejscowosc"  class="form-control" />

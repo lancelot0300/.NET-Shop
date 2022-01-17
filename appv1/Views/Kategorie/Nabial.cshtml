@@ -5,14 +5,13 @@
     @using Microsoft.AspNetCore.Http;
     @using appv1.Controllers
     @inject IHttpContextAccessor HttpContextAccessor
-     Login user =  HttpContextAccessor.HttpContext.Session.GetComplexData<Login>("user");
+    Login user =  HttpContextAccessor.HttpContext.Session.GetComplexData<Login>("user");
   
 }
 
 <div>
     <h1 class="kategoria">Nabiał</h1>
        <table class="tabela">
-
         <tr> 
             <th>ID</th>
             <th>Nazwa</th>

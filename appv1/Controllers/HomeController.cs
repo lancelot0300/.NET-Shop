@@ -87,9 +87,38 @@ namespace appv1.Controllers
         [Route("{controller}/Products")]
         public IActionResult Products()
         {
-            return View(obslugaBazyDanych.GetProducts());
+            return View();
         }
 
+        [HttpGet]
+        public IActionResult Zamowienia()
+        {
+            Login login = HttpContext.Session.GetComplexData<Login>("user");
+            if (login == null)
+            {
+                ViewBag.Message = "Musisz się zalogować";
+                return View("Login");
+            }
+            else
+            {
+                if (login.Admin == 0)
+                {
+                    ViewBag.Message = "Musisz być administratorem";
+                    return View("Index");
+                }
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetZamowienia(int id)
+        {
+
+            dynamic mymodel = new System.Dynamic.ExpandoObject();
+            mymodel.Produkt = obslugaBazyDanych.GetDaneOPro(id);
+            mymodel.Koszyk = obslugaBazyDanych.GetKoszykZam(id);
+            return View(mymodel);
+        }
 
 
 
@@ -307,6 +336,10 @@ namespace appv1.Controllers
         [HttpGet]
         public IActionResult Zamowienie()
             {
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("cart")))
+                {
+                return View("Products");
+            }
                return View();
             }
 

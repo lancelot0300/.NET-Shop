@@ -7,7 +7,7 @@
     Login user =  HttpContextAccessor.HttpContext.Session.GetComplexData<Login>("user");
 }
 
-
+    <h2>Podaj id zamowienia</h2>
          <td > @using( @Html.BeginForm("GetZamowienia", "Home", FormMethod.Post , new {id = "id"}))
                         {
                             <input id="id" type="number" name="id"/>

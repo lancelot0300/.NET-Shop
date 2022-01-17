@@ -43,7 +43,6 @@ namespace appv1.Services
         }
         public List<KoszykDoBazy> GetKoszykZam(int id)
         {
-            List<Products> products = GetProducts();
             List <Zamowienie> zamowienia = Context.Zamowienia.ToList();
             List<KoszykDoBazy> koszyk = Context.Koszyk.ToList();
             var koszyk2 = new List<KoszykDoBazy>();

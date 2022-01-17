@@ -11,47 +11,53 @@
 }
 
 
+    <h1 class="kategoria" >Zamówienie</h1>
+    <div style="display:flex">
+   
+    <div style="flex: 50%" >
+       <table  class="tabela">
 
-    <div>
-    <h1 class="kategoria">Zamówienie</h1>
-       <table class="tabela">
-
-           <tr>
-               <th  colspan="4">Dane Produktu</th>
-               <th  colspan="2">Dane Zamowienia</th>
-           </tr>
         <tr> 
             <th>Nazwa</th>
             <th>Cena</th>
             <th>Kod produktu</th>
             <th>ID produktu</th>
-            <th>Ilosc</th>
-            <th>Nr. Zamowienia</th>
+            
            
-            </tr>
-            <tr>
+         </tr>
+            
              @foreach (Products product in Model.Produkt)
             
              {
-                
+                <tr>
                     <td> @product.Nazwa </td>
                     <td> @product.Cena </td>
                     <td> @product.KodProduktu </td>
                     <td> @product.ID </td>
                     
-
+                 </tr> 
             
             }
-
-
+        </table >
+       </div>
+       <div style="flex: 50%">
+             <table class="tabela">
+                 
+             <tr>
+                <th>Ilosc</th>
+                <th>Nr. Zamowienia</th>
+                 <th>Nr. Zamowienia</th>
+            </tr>
              @foreach (KoszykDoBazy koszyk in Model.Koszyk)
             
-             {
+             {  <tr>
                     <td> @koszyk.Ilosc </td>
                     <td> @koszyk.ZamowienieId </td>
-                 
+
+                 </tr> 
             }
-             </tr> 
+            
            </table>
+           </div>
 </div>
 

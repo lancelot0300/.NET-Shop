@@ -24,7 +24,7 @@ namespace appv1.Interfaces
         public void UsunProduct(int id);
         public void Zarejestruj(Login user);
         Products Find(int id);
-        void DodajZamowienie(Zamowienie zamowienie, List<Koszyk> koszyk);
+        Task DodajZamowienie(Zamowienie zamowienie, List<Koszyk> koszyk);
       
     }
 }

@@ -143,7 +143,7 @@ namespace appv1.Services
         }
 
 
-        public void DodajZamowienie(Zamowienie zamowienie, List<Koszyk> koszyk)
+        public async Task DodajZamowienie(Zamowienie zamowienie, List<Koszyk> koszyk)
         {
             try {
                 foreach (var k in koszyk)
@@ -154,7 +154,7 @@ namespace appv1.Services
                     ko.ZamowienieId = GetOrderId() + 1;
                     ko.Ilosc = k.Ilosc;
 
-                   UsunIlosc(k.Product.ID, k.Ilosc);
+                  await UsunIlosc(k.Product.ID, k.Ilosc);
 
                     Context.Koszyk.Add(ko);
                     Context.SaveChanges();

@@ -9,37 +9,35 @@ namespace appv1.Controllers
 {
     public class KategorieController : Controller
     {
-        private readonly IObslugaBazyDanych obslugaBazyDanych;
-
-        private readonly SklepContext bazaDanych;
+        private readonly IObslugaBazyDanych _obslugaBazyDanych;
 
 
 
         public KategorieController(IObslugaBazyDanych obslugaBazyDanych)
         {
-            this.obslugaBazyDanych = obslugaBazyDanych;
-           
+            _obslugaBazyDanych = obslugaBazyDanych;
+
 
         }
         public IActionResult Warzywa()
         {
             string name = ControllerContext.ActionDescriptor.ActionName;
-            return View(obslugaBazyDanych.GetKategory(name));
+            return View(_obslugaBazyDanych.GetKategory(name));
         }
         public IActionResult Owoce()
         {
             string name = ControllerContext.ActionDescriptor.ActionName;
-            return View(obslugaBazyDanych.GetKategory(name));
+            return View(_obslugaBazyDanych.GetKategory(name));
         }
         public IActionResult Nabial()
         {
             string name = ControllerContext.ActionDescriptor.ActionName;
-            return View(obslugaBazyDanych.GetKategory(name));
+            return View(_obslugaBazyDanych.GetKategory(name));
         }
         public IActionResult Slodycze()
         {
             string name = ControllerContext.ActionDescriptor.ActionName;
-            return View(obslugaBazyDanych.GetKategory(name));
+            return View(_obslugaBazyDanych.GetKategory(name));
         }
 
 
@@ -53,7 +51,7 @@ namespace appv1.Controllers
         }
         public ActionResult UsunZKoszyka(int id)
         {
-            Products product = obslugaBazyDanych.Find(id);
+            Products product = _obslugaBazyDanych.Find(id);
             List<Koszyk> cart = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
             int index = isExist(id);
             if (index != -1)

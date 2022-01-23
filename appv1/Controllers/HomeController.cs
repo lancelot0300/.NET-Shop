@@ -153,10 +153,10 @@ namespace appv1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password)
         {
 
-            Login user = _obslugaBazyDanych.User(username, password);
+            Login user =  _obslugaBazyDanych.User(username, password);
 
 
             if (user != null)

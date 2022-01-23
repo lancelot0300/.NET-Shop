@@ -70,7 +70,7 @@ namespace appv1.DAL.Contexts
 
             var koszyk = new KoszykDoBazy[]
             {
-                new KoszykDoBazy{ProductId = 5 , Ilosc = 1, ZamowienieId= 1  }
+                new KoszykDoBazy{ProductId = 2 , Ilosc = 1, ZamowienieId= 1  }
 
             };
             foreach (KoszykDoBazy c in koszyk)
@@ -92,10 +92,10 @@ namespace appv1.DAL.Contexts
                     UserId = 1,
                     Ulica = "test",
                     Data = DateTime.Now ,
-                    KodPocztowy = "test",
+                    KodPocztowy = "22-470",
                     Miejscowosc = "test",
-                    NumerDomu = "test",
-                    NumerMieszkania = "test" }
+                    NumerDomu = "142",
+                    NumerMieszkania = "21" }
 
 
             };

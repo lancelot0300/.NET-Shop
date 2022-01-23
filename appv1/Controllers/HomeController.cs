@@ -26,19 +26,12 @@ namespace appv1.Controllers
     }
     public class HomeController : Controller
     {
-        private readonly IObslugaBazyDanych obslugaBazyDanych;
-
-        private readonly SklepContext bazaDanych;
+        private readonly IObslugaBazyDanych _obslugaBazyDanych;
 
 
-
-        public HomeController(IObslugaBazyDanych obslugaBazyDanych, SklepContext bazaDanych)
+        public HomeController(IObslugaBazyDanych obslugaBazyDanych)
         {
-            this.obslugaBazyDanych = obslugaBazyDanych;
-            this.bazaDanych = bazaDanych;
-
-            obslugaBazyDanych.Context = bazaDanych;
-
+            _obslugaBazyDanych = obslugaBazyDanych;
         }
         public IActionResult Index()
         {
@@ -115,8 +108,8 @@ namespace appv1.Controllers
         {
 
             dynamic mymodel = new System.Dynamic.ExpandoObject();
-            mymodel.Produkt = obslugaBazyDanych.GetDaneOPro(id);
-            mymodel.Koszyk = obslugaBazyDanych.GetKoszykZam(id);
+            mymodel.Produkt = _obslugaBazyDanych.GetDaneOPro(id);
+            mymodel.Koszyk = _obslugaBazyDanych.GetKoszykZam(id);
             return View(mymodel);
         }
 
@@ -134,7 +127,7 @@ namespace appv1.Controllers
         public IActionResult UsunProduct(int id)
         {
 
-            obslugaBazyDanych.UsunProduct(id);
+            _obslugaBazyDanych.UsunProduct(id);
 
             return View("Products");
 
@@ -163,7 +156,7 @@ namespace appv1.Controllers
         public IActionResult Login(string username, string password)
         {
 
-            Login user = obslugaBazyDanych.User(username, password);
+            Login user = _obslugaBazyDanych.User(username, password);
 
 
             if (user != null)
@@ -191,7 +184,7 @@ namespace appv1.Controllers
         public IActionResult Register(Login user)
         {
 
-            var users = obslugaBazyDanych.GetUsers();
+            var users = _obslugaBazyDanych.GetUsers();
             foreach (var obiekt in users)
             {
                 if (user.UserName == obiekt.UserName)
@@ -201,7 +194,7 @@ namespace appv1.Controllers
                 }
 
             }
-            obslugaBazyDanych.Zarejestruj(user);
+            _obslugaBazyDanych.Zarejestruj(user);
             ViewBag.error = "Udało się";
             return View("Login", user);
         }
@@ -221,8 +214,8 @@ namespace appv1.Controllers
         public ActionResult Buy(int id)
         {
 
-            Products product = obslugaBazyDanych.Find(id);
-            int ilosc = obslugaBazyDanych.SprawdzIlosc(id);
+            Products product = _obslugaBazyDanych.Find(id);
+            int ilosc = _obslugaBazyDanych.SprawdzIlosc(id);
             if ( ilosc == 0)
             {
                 ViewBag.Message = "Brak produktu: " + product.Nazwa;
@@ -274,7 +267,7 @@ namespace appv1.Controllers
         }
         public ActionResult UsunZKoszyka(int id)
         {
-            Products product = obslugaBazyDanych.Find(id);
+            Products product = _obslugaBazyDanych.Find(id);
             List<Koszyk> cart = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
             int index = isExist(id);
             if (index != -1)
@@ -324,8 +317,8 @@ namespace appv1.Controllers
             {
                 if (products.Cena.ToString().Contains(".")) throw new Exception();
 
-                obslugaBazyDanych.DodajProduct(products);
-                return View("Products", obslugaBazyDanych.GetProducts());
+                _obslugaBazyDanych.DodajProduct(products);
+                return View("Products", _obslugaBazyDanych.GetProducts());
             }
             catch (Exception ex)
             {
@@ -349,7 +342,7 @@ namespace appv1.Controllers
 
         {
             koszyk = HttpContext.Session.GetComplexData<List<Koszyk>>("cart");
-            obslugaBazyDanych.DodajZamowienie(zamowienie, koszyk);
+            _obslugaBazyDanych.DodajZamowienie(zamowienie, koszyk);
 
             HttpContext.Session.Remove("cart");
 

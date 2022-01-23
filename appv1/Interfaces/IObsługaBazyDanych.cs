@@ -7,7 +7,6 @@ namespace appv1.Interfaces
 {
     public interface IObslugaBazyDanych
     {
-        public SklepContext Context { get; set; }
 
 
         public void DodajProduct(Products product);

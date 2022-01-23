@@ -12,8 +12,12 @@ namespace appv1.Services
 {
     public class ObslugaBazyDanych : IObslugaBazyDanych
     {
-        public SklepContext Context { get; set; }
+        private SklepContext Context;
 
+        public ObslugaBazyDanych(SklepContext context)
+        {
+            this.Context = context;
+        }
         public void DodajProduct(Products product)
         {
             var products = GetProducts();
@@ -150,7 +154,7 @@ namespace appv1.Services
                     ko.ZamowienieId = GetOrderId() + 1;
                     ko.Ilosc = k.Ilosc;
 
-                    UsunIlosc(k.Product.ID, k.Ilosc);
+                   UsunIlosc(k.Product.ID, k.Ilosc);
 
                     Context.Koszyk.Add(ko);
                     Context.SaveChanges();
@@ -165,7 +169,7 @@ namespace appv1.Services
             }
                  
 
-             async void UsunIlosc(int id, int ilosc)
+             async Task UsunIlosc(int id, int ilosc)
             {
                 var product = Context.Products.Find(id);
                 product.Ilosc = product.Ilosc - ilosc;

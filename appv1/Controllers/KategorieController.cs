@@ -15,12 +15,10 @@ namespace appv1.Controllers
 
 
 
-        public KategorieController(IObslugaBazyDanych obslugaBazyDanych, SklepContext bazaDanych)
+        public KategorieController(IObslugaBazyDanych obslugaBazyDanych)
         {
             this.obslugaBazyDanych = obslugaBazyDanych;
-            this.bazaDanych = bazaDanych;
-
-            obslugaBazyDanych.Context = bazaDanych;
+           
 
         }
         public IActionResult Warzywa()

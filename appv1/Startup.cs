@@ -30,7 +30,7 @@ namespace appv1
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "SklepInt", Version = "v1" });
             });
           
-            services.AddSingleton<IObslugaBazyDanych, ObslugaBazyDanych>();
+           
 
 
             services.AddDbContext<SklepContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SklepDatabaseConnection")));
@@ -47,9 +47,8 @@ namespace appv1
                 options.Cookie.IsEssential = true;
             });
             services.AddMvc().AddSessionStateTempDataProvider();
-
+            services.AddScoped<IObslugaBazyDanych, ObslugaBazyDanych>();
             services.AddHttpContextAccessor();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

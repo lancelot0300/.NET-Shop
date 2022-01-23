@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestyJednostkowe\TestyJednostkowe.csproj" />
+    <ProjectReference Include="..\appv1\appv1.csproj" />
   </ItemGroup>
 
 </Project>

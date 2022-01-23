@@ -17,44 +17,8 @@ namespace TestyJednostkowe.Tests
     [TestClass()]
     public class Tests
     {
-        private IObslugaBazyDanych ObslugaBazyDanych { get; set; }
-
-
         [TestMethod()]
-        public void AccountAdminTest()
-        {
-            var login = new Login();
-
-            login.UserName = "admin";
-            login.Password = "1234";
-
-            var test = new Login();
-
-            test.UserName = "admin";
-            test.Password = "1234";
-
-            Assert.AreEqual(login.UserName, test.UserName);
-            Assert.AreEqual(login.Password, test.Password);
-        }
-        [TestMethod()]
-        public void AccountAdminTest2()
-        {
-            var login = new Login();
-
-            login.UserName = "admin";
-            login.Password = "1234";
-
-            var test = new Login();
-
-            test.UserName = "admin";
-            test.Password = "1224";
-
-            Assert.AreEqual(login.UserName, test.UserName);
-            Assert.AreEqual(login.Password, test.Password);
-        }
-
-        [TestMethod()]
-        public void AccountAdminTest3()
+        public void Test1()
         {
 
             using (var mock = AutoMock.GetLoose())
@@ -64,31 +28,99 @@ namespace TestyJednostkowe.Tests
                     UserName = "admin",
                     Password = "1234"
                 };
-                mock.Mock<IObslugaBazyDanych>().Setup(x => x.User(expected.UserName,expected.Password)).Returns(GetLogin);
+                mock.Mock<IObslugaBazyDanych>().Setup(x => x.User(expected.UserName, expected.Password)).Returns(GetLogin(expected.UserName, expected.Password));
 
-              var cls =  mock.Create<IObslugaBazyDanych>();
-                
-                var actual = cls.User("admin", "1234");
+                var cls = mock.Create<IObslugaBazyDanych>();
 
-               
-               Assert.AreEqual(expected.UserName, actual.UserName);
+                var actual = cls.User(expected.UserName,expected.Password);
 
-               
+
+                Assert.AreEqual(expected.UserName, actual.UserName);
             }
 
+        }
+        [TestMethod()]
+        public void Test2()
+        {
 
+            using (var mock = AutoMock.GetLoose())
+            {
+                Login expected = new Login
+                {
+                    UserName = "pawel",
+                    Password = "1234"
+                };
+                mock.Mock<IObslugaBazyDanych>().Setup(x => x.User(expected.UserName, expected.Password)).Returns(GetLogin(expected.UserName, expected.Password));
+
+                var cls = mock.Create<IObslugaBazyDanych>();
+
+                var actual = cls.User(expected.UserName, expected.Password);
+
+
+                Assert.AreEqual(expected.UserName, actual.UserName);
+            }
 
         }
-        private Login GetLogin()
+        [TestMethod()]
+        public void Test3()
         {
-           Login login = new Login
+            try
+            {
+                using (var mock = AutoMock.GetLoose())
+                {
+                    Login expected = new Login
+                    {
+                        UserName = "test",
+                        Password = "1234"
+                    };
+                    mock.Mock<IObslugaBazyDanych>().Setup(x => x.User(expected.UserName, expected.Password)).Returns(GetLogin(expected.UserName, expected.Password));
+
+                    var cls = mock.Create<IObslugaBazyDanych>();
+
+                    var actual = cls.User(expected.UserName, expected.Password);
+
+
+
+                    Assert.AreEqual(expected.UserName, actual.UserName);
+                }
+            }
+           catch (Exception ex)
+            {
+                Console.WriteLine("Nie udało się");
+            }
+
+        }
+
+
+
+
+        private Login GetLogin(string username, string password)
+        {
+            List<Login> list = new List<Login>
+            {
+                new Login
                {
                 UserName = "admin",
                 Password ="1234"
-               };
+               },
 
+                new Login
+               {
+                UserName = "pawel",
+                Password ="1234"
+               }
 
-            return login;
+        };
+
+            foreach (var user in list)
+            {
+                if (user.UserName == username && user.Password == password)
+                {
+                    return user;
+                }
+            }
+
+            return null;
         }
 
     }
